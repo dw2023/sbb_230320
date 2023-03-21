@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 class SbbApplicationTests {
@@ -103,5 +104,26 @@ class SbbApplicationTests {
 		List<Question> qList = questionRepository.findBySubjectLike("sbb%"); // subject가 'sbb'로 시작하는 것 찾기
 		Question q = qList.get(0);
 		assertEquals("sbb가 무엇인가요?", q.getSubject());
+	}
+
+	/*
+    SQL
+    UPDATE
+        question
+    SET
+        content = ?,
+        create_date = ?,
+        subject = ?
+    WHERE
+        id = ?
+    */
+	@Test
+	@DisplayName("데이터 수정하기")
+	void t007() {
+		Optional<Question> oq = questionRepository.findById(1);
+		assertTrue(oq.isPresent());
+		Question q = oq.get();
+		q.setSubject("수정된 제목");
+		questionRepository.save(q);
 	}
 }
