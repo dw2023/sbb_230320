@@ -33,4 +33,9 @@ public class Question {
     // 다만 만들면 해당 객체(질문객체)에서 관련된 답변들을 찾을 때 편합니다.
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<Answer> answerList = new ArrayList<>(); // OneToMany 에는 직접객체초기화
+
+    public void addAnswer(Answer a) {
+        a.setQuestion(this);
+        answerList.add(a);
+    }
 }
