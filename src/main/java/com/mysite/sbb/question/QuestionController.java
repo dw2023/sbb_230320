@@ -17,7 +17,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QuestionController {
     private final QuestionService questionService;
-    private final AnswerService answerService;
 
     @GetMapping("/list")
     public String list(Model model) {
@@ -31,10 +30,8 @@ public class QuestionController {
     @GetMapping("/detail/{id}")
     public String detail(Model model, @PathVariable("id") Integer id) {
         Question question = questionService.getQuestion(id);
-        List<Answer> answers = answerService.getAnswersByQuestionId(id);
 
         model.addAttribute("question", question);
-        model.addAttribute("answers", answers);
 
         return "question_detail";
     }
